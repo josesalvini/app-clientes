@@ -7,6 +7,9 @@ import { AngularFireModule } from '@angular/fire/compat';
 import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
 import { AngularFireAuthModule } from '@angular/fire/compat/auth';
 
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
+import { ToastrModule } from 'ngx-toastr';
 
 import { FormsModule } from '@angular/forms';
 
@@ -22,6 +25,7 @@ import { ConfiguracionComponent } from './componentes/configuracion/configuracio
 import { NoEncontradoComponent } from './componentes/no-encontrado/no-encontrado.component';
 import { PiePaginaComponent } from './componentes/pie-pagina/pie-pagina.component';
 import { ClienteService } from './services/cliente.service';
+import { AuthService } from './services/auth.service';
 
 @NgModule({
   declarations: [
@@ -39,10 +43,12 @@ import { ClienteService } from './services/cliente.service';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    AngularFireModule.initializeApp(environment.firebase,'clientes-app'),
+    AngularFireModule.initializeApp(environment.firebase),
     AngularFirestoreModule,
     AngularFireAuthModule,
-    FormsModule
+    FormsModule,
+    BrowserAnimationsModule,
+    ToastrModule.forRoot(),
   ],
   providers: [ClienteService],
   bootstrap: [AppComponent]

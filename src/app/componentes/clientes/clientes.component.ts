@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { map } from 'rxjs/operators';
 import { Cliente } from 'src/app/modelo/cliente.model';
 import { ClienteService } from 'src/app/services/cliente.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-clientes',
@@ -12,17 +12,25 @@ export class ClientesComponent implements OnInit {
 
   clientes: Cliente[];
 
-  constructor(private clienteServicio: ClienteService) { }
+  constructor(private clienteServicio: ClienteService,
+              private toastr: ToastrService) { }
 
   ngOnInit(): void {
-    this.clienteServicio
+    this.obtenerClientes();
+    /*this.clienteServicio
                 .getClientes()
                 .subscribe(
                   clientes => {
                     this.clientes = clientes;
                   }
-                )
+                )*/
   }
 
+  obtenerClientes(){
+     this.clienteServicio.obtenerClientes().subscribe(res => {
+        console.log(res);
+        this.toastr.success('Clientes obtenidos');
+     });
+  }
 
 }
