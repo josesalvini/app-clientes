@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { FlashMessagesService } from 'flash-messages-angular';
 import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
@@ -8,8 +10,23 @@ import { AuthService } from 'src/app/services/auth.service';
 })
 export class LoginComponent implements OnInit {
 
-  constructor() {}
+  email: string;
+  password: string;
 
-  ngOnInit() {}
+  constructor(private router:Router,
+              private flashMessages: FlashMessagesService,
+              private loginService: AuthService) {}
+
+  ngOnInit() {
+    this.loginService.getAuth().subscribe(auth => {
+      if(auth){
+        this.router.navigate(['/']);
+      }
+    });
+  }
+
+  login(){
+    this.loginService.googleLogin();
+  }
 
 }

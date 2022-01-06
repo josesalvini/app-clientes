@@ -42,4 +42,37 @@ export class ClienteService {
       return this.clientes;
     }
 
+    agregarCliente(cliente: Cliente){
+        const clienteCollection = this.db.collection<Cliente>('clientes');
+        clienteCollection.add(cliente);
+    }
+
+    getCliente(id: string){
+      this.clienteDoc = this.db.doc<Cliente>(`clientes/${id}`);
+      this.cliente = this.clienteDoc
+                            .snapshotChanges()
+                            .pipe(map(
+                              action => {
+                                if(action.payload.exists === false){
+                                  return null;
+                                }else{
+                                  const dato = action.payload.data() as Cliente;
+                                  dato.id = action.payload.id;
+                                  return dato;
+                                }
+                              }
+                            ))
+      return this.cliente;
+    }
+
+    modificar(cliente: Cliente){
+      this.clienteDoc = this.db.doc<Cliente>(`clientes/${cliente.id}`);
+      this.clienteDoc.update(cliente);
+    }
+
+    eliminar(cliente: Cliente){
+      this.clienteDoc = this.db.doc<Cliente>(`clientes/${cliente.id}`);
+      this.clienteDoc.delete();
+    }
+
 }

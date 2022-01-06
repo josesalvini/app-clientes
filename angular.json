@@ -20,7 +20,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "allowedCommonJsDependencies": ["lodash"],
+            "allowedCommonJsDependencies": ["lodash","flash-messages-angular"],
             "outputPath": "dist/app-clientes",
             "index": "src/index.html",
             "main": "src/main.ts",

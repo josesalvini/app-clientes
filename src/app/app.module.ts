@@ -27,6 +27,7 @@ import { ConfiguracionComponent } from './componentes/configuracion/configuracio
 import { NoEncontradoComponent } from './componentes/no-encontrado/no-encontrado.component';
 import { PiePaginaComponent } from './componentes/pie-pagina/pie-pagina.component';
 import { ClienteService } from './services/cliente.service';
+import { AuthService } from './services/auth.service';
 
 @NgModule({
   declarations: [
@@ -52,7 +53,7 @@ import { ClienteService } from './services/cliente.service';
     ToastrModule.forRoot(),
     FlashMessagesModule.forRoot(),
   ],
-  providers: [ClienteService],
+  providers: [ClienteService, AuthService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

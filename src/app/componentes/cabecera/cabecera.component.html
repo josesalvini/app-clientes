@@ -14,10 +14,10 @@
 
     <div class="collapse navbar-collapse" id="navbarCollapse">
       <ul class="navbar-nav ms-auto">
-        <li class="nav-item">
+        <li *ngIf="isLoggedIn" class="nav-item">
           <a routerLink="/" class="nav-link">Inicio</a>
         </li>
-        <li class="nav-item dropdown">
+        <li *ngIf="isLoggedIn" class="nav-item dropdown">
           <a
             class="nav-link dropdown-toggle"
             id="navbarDropdownMenu"
@@ -25,18 +25,23 @@
             data-bs-toggle="dropdown"
             aria-expanded="false"
           >
-            <i class="fa fa-user"></i> Bienvenido
+            <i class="fa fa-user"></i> Hola, {{ loggedInUser }}
           </a>
           <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenu">
-            <li>
-              <a routerLink="/configuracion" class="dropdown-item">
-                <i class="fas fa-cog"></i> Configuración
+            <li *ngIf="!isLoggedIn" class="nav-item">
+              <a routerLink="/login" class="dropdown-item">
+                <i class="fas fa-sign-in-alt"></i> Login
+              </a>
+            </li>
+            <li *ngIf="isLoggedIn" class="nav-item">
+              <a style="cursor: pointer;" (click)="logout()" class="dropdown-item">
+                <i class="fas fa-sign-out-alt"></i> Logout
               </a>
             </li>
             <li><hr class="dropdown-divider" /></li>
-            <li>
-              <a routerLink="/" class="dropdown-item">
-                <i class="fas fa-sign-out-alt"></i> Salir
+            <li *ngIf="isLoggedIn" class="nav-item">
+              <a routerLink="/configuracion" class="dropdown-item">
+                <i class="fas fa-cog"></i> Configuración
               </a>
             </li>
           </ul>

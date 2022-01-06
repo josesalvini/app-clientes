@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Cliente } from 'src/app/modelo/cliente.model';
 import { ClienteService } from 'src/app/services/cliente.service';
 import { ToastrService } from 'ngx-toastr';
 import { FlashMessagesService } from 'flash-messages-angular';
+import { NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-clientes',
@@ -18,6 +19,9 @@ export class ClientesComponent implements OnInit {
     email: '',
     saldo: 0,
   }
+
+  @ViewChild('clienteForm') clienteForm: NgForm;
+  @ViewChild('botonCerrar') botonCerrar: ElementRef;
 
   constructor(private clienteServicio: ClienteService,
               private toastr: ToastrService,
@@ -35,9 +39,12 @@ export class ClientesComponent implements OnInit {
 
   getSaldoTotal(): number {
     let saldoTotal: number = 0;
-    this.clientes.forEach(cliente => {
-        saldoTotal += cliente.saldo;
-    });
+    if(this.clientes){
+        this.clientes.forEach(cliente => {
+          saldoTotal += cliente.saldo;
+      });
+    }
+
     return saldoTotal;
   }
 
@@ -45,7 +52,16 @@ export class ClientesComponent implements OnInit {
     if(!valid){
       this.flashMessages.show('Completar todos los campos del formulario.',
               {cssClass: 'alert-danger', timeout: 4000})
+    }else{
+      this.clienteServicio.agregarCliente(value);
+      this.clienteForm.resetForm();
+      this.cerrarModal();
+      this.toastr.success('Cliente agregado.','Agregar cliente');
     }
+  }
+
+  private cerrarModal(){
+    this.botonCerrar.nativeElement.click();
   }
 
 }

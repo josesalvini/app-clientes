@@ -60,7 +60,7 @@
           <div class="card-body">
             <h3>Saldo total</h3>
             <h4 class="display-4">
-              {{ getSaldoTotal() | currency: "ARS":"$" }}
+              <i class="fas fa-money-check-alt"></i> {{ getSaldoTotal() | currency: "ARS":"$" }}
             </h4>
           </div>
         </div>
@@ -87,6 +87,7 @@
           type="button"
           class="btn-close"
           data-bs-dismiss="modal"
+          #botonCerrar
         ></button>
       </div>
 
@@ -106,31 +107,89 @@
               required
               minlength="2"
             />
-            <div *ngIf="nombre.invalid && (nombre.dirty || nombre.touched)" class="invalid-feedback">
-              <div *ngIf="nombre.errors?.['required']">El nombre es requerido.</div>
+            <div
+              *ngIf="nombre.invalid && (nombre.dirty || nombre.touched)"
+              class="invalid-feedback"
+            >
+              <div *ngIf="nombre.errors?.['required']">
+                El nombre es requerido.
+              </div>
               <div *ngIf="nombre.errors?.['minlength']">
-                Debe contener al menos 2 caracteres.
+                El nombre debe contener al menos 2 caracteres.
               </div>
             </div>
           </div>
           <div class="form-group">
             <label for="apellido">Apellido</label>
-            <input type="text" name="apellido" class="form-control" />
+            <input
+              type="text"
+              name="apellido"
+              class="form-control"
+              #apellido="ngModel"
+              [(ngModel)]="cliente.apellido"
+              [ngClass]="{ 'is-invalid': apellido.errors && apellido.touched }"
+              required
+              minlength="2"
+            />
+            <div
+              *ngIf="apellido.invalid && (apellido.dirty || apellido.touched)"
+              class="invalid-feedback"
+            >
+              <div *ngIf="apellido.errors?.['required']">
+                El apellido es requerido.
+              </div>
+              <div *ngIf="apellido.errors?.['minlength']">
+                El apellido debe contener al menos 2 caracteres.
+              </div>
+            </div>
           </div>
           <div class="form-group">
             <label for="email">Email</label>
-            <input type="email" name="email" class="form-control" />
+            <input
+              type="email"
+              name="email"
+              class="form-control"
+              #email="ngModel"
+              [(ngModel)]="cliente.email"
+              [ngClass]="{ 'is-invalid': email.errors && email.touched }"
+              required
+              pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$"
+            />
+            <div
+              *ngIf="email.invalid && (email.dirty || email.touched)"
+              class="invalid-feedback"
+            >
+              <div *ngIf="email.errors?.['required']">
+                El email es requerido.
+              </div>
+              <div *ngIf="email.errors?.['pattern']">
+                El email no es valido.
+              </div>
+            </div>
           </div>
           <div class="form-group">
             <label for="saldo">Saldo</label>
-            <input type="number" name="saldo" class="form-control" />
+            <input type="number"
+            name="saldo"
+            class="form-control"
+            #saldo="ngModel"
+              [(ngModel)]="cliente.saldo"
+              [ngClass]="{ 'is-invalid': saldo.errors && saldo.touched }"
+              required/>
+            <div
+              *ngIf="saldo.invalid && (saldo.dirty || saldo.touched)"
+              class="invalid-feedback"
+            >
+              <div *ngIf="saldo.errors?.['required']">
+                El saldo del cliente es requerido.
+              </div>
+            </div>
           </div>
         </div>
         <div class="modal-footer">
           <button
             type="submit"
             class="btn btn-secondary"
-            data-bs-dismiss="modal"
           >
             Guardar
           </button>

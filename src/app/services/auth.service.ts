@@ -1,38 +1,40 @@
-import { Injectable } from "@angular/core";
+import { Injectable, ResolvedReflectiveFactory } from "@angular/core";
 import { AngularFireAuth } from "@angular/fire/compat/auth";
 import { Router } from "@angular/router";
 import * as firebase from 'firebase/compat/app';
+import { map } from "rxjs/operators";
 
 @Injectable()
 export class AuthService {
 
     token: string;
-    uid?: string;
+    uid: string;
 
     constructor(
-        private afAuth: AngularFireAuth,
+        private authService: AngularFireAuth,
         private router: Router) {}
 
-    getToken(): string {
-        return this.token;
+    login(email: string, password: string){
+        return this.authService.signInWithEmailAndPassword(email, password);
     }
 
-    getUID() {
-        return this.uid;
+    getAuth(){
+      return this.authService.authState.pipe(
+        map(auth => auth)
+      );
+
     }
 
     googleLogin() {
         const provider = new firebase.default.auth.GoogleAuthProvider();
         return this.oAuthLogin(provider).then(value => {
             //console.log('Sucess: ', value);
-            console.log('UID: ', value.user?.uid);
-            this.uid = value.user?.uid;
-
+            console.log('USER: ', value.user);
             //value.user?.getIdTokenResult().then(result => {
             //    console.log('Token: ', result.token);
             //    this.token = result.token;
             //})
-            this.router.navigateByUrl('/home');
+            this.router.navigateByUrl('/');
           })
            .catch(error => {
              console.log('Something went wrong: ', error);
@@ -41,13 +43,11 @@ export class AuthService {
       }
 
     logout() {
-        this.afAuth.signOut().then(() => {
-          this.router.navigate(['/']);
-        });
-      }
+        this.authService.signOut();
+    }
 
     private oAuthLogin(provider: firebase.default.auth.AuthProvider) {
-        return this.afAuth.signInWithPopup(provider);
+        return this.authService.signInWithPopup(provider);
       }
 
 }
