@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Cliente } from 'src/app/modelo/cliente.model';
 import { ClienteService } from 'src/app/services/cliente.service';
 import { ToastrService } from 'ngx-toastr';
+import { FlashMessagesService } from 'flash-messages-angular';
 
 @Component({
   selector: 'app-clientes',
@@ -11,26 +12,40 @@ import { ToastrService } from 'ngx-toastr';
 export class ClientesComponent implements OnInit {
 
   clientes: Cliente[];
+  cliente: Cliente = {
+    nombre: '',
+    apellido: '',
+    email: '',
+    saldo: 0,
+  }
 
   constructor(private clienteServicio: ClienteService,
-              private toastr: ToastrService) { }
+              private toastr: ToastrService,
+              private flashMessages: FlashMessagesService) { }
 
   ngOnInit(): void {
-    this.obtenerClientes();
-    /*this.clienteServicio
+    this.clienteServicio
                 .getClientes()
                 .subscribe(
                   clientes => {
                     this.clientes = clientes;
-                  }
-                )*/
+                  });
+
   }
 
-  obtenerClientes(){
-     this.clienteServicio.obtenerClientes().subscribe(res => {
-        console.log(res);
-        this.toastr.success('Clientes obtenidos');
-     });
+  getSaldoTotal(): number {
+    let saldoTotal: number = 0;
+    this.clientes.forEach(cliente => {
+        saldoTotal += cliente.saldo;
+    });
+    return saldoTotal;
+  }
+
+  agregar({value, valid}: {value: Cliente, valid: boolean}){
+    if(!valid){
+      this.flashMessages.show('Completar todos los campos del formulario.',
+              {cssClass: 'alert-danger', timeout: 4000})
+    }
   }
 
 }

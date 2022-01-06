@@ -12,6 +12,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastrModule } from 'ngx-toastr';
 
 import { FormsModule } from '@angular/forms';
+import { FlashMessagesModule } from 'flash-messages-angular';
+
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -25,7 +27,6 @@ import { ConfiguracionComponent } from './componentes/configuracion/configuracio
 import { NoEncontradoComponent } from './componentes/no-encontrado/no-encontrado.component';
 import { PiePaginaComponent } from './componentes/pie-pagina/pie-pagina.component';
 import { ClienteService } from './services/cliente.service';
-import { AuthService } from './services/auth.service';
 
 @NgModule({
   declarations: [
@@ -49,6 +50,7 @@ import { AuthService } from './services/auth.service';
     FormsModule,
     BrowserAnimationsModule,
     ToastrModule.forRoot(),
+    FlashMessagesModule.forRoot(),
   ],
   providers: [ClienteService],
   bootstrap: [AppComponent]

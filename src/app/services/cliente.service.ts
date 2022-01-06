@@ -25,38 +25,21 @@ export class ClienteService {
     items: Observable<Cliente[]>;
 
     constructor(private db: AngularFirestore,
-                public auth: AngularFireAuth,
-                private authService: AuthService) {
+                public auth: AngularFireAuth) {
       this.itemsCollection = db.collection<Cliente>('clientes');
-      this.clientes = this.itemsCollection.snapshotChanges().pipe(
-                        map(cambios => {
-                            return cambios.map(accion => {
-                              const datos = accion.payload.doc.data() as Cliente;
-                              datos.id = accion.payload.doc.id;
-                              return datos;
-                            })
-                          }));
-      this.clientes.forEach( cliente => {
-        console.log("Cliente: " + cliente);
-      });
     }
 
     getClientes(): Observable<Cliente[]>{
-      /*this.clientes = this.itemsCollection.snapshotChanges().pipe(
+      this.clientes = this.itemsCollection.snapshotChanges().pipe(
         map(cambios => {
             return cambios.map(accion => {
               const datos = accion.payload.doc.data() as Cliente;
               datos.id = accion.payload.doc.id;
               return datos;
             })
-          }));*/
+          }));
 
       return this.clientes;
-    }
-
-    obtenerClientes(): Observable<any>{
-      const uid = this.authService.getUID();
-      return this.db.collection('clientes').snapshotChanges();
     }
 
 }
