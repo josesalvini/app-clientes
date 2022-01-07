@@ -7,6 +7,8 @@ import { AngularFireModule } from '@angular/fire/compat';
 import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
 import { AngularFireAuthModule } from '@angular/fire/compat/auth';
 
+import { SETTINGS as AUTH_SETTINGS } from '@angular/fire/compat/auth';
+
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { ToastrModule } from 'ngx-toastr';
@@ -28,6 +30,9 @@ import { NoEncontradoComponent } from './componentes/no-encontrado/no-encontrado
 import { PiePaginaComponent } from './componentes/pie-pagina/pie-pagina.component';
 import { ClienteService } from './services/cliente.service';
 import { AuthService } from './services/auth.service';
+import { AuthGuard } from './guardianes/auth.guard';
+import { ConfigService } from './services/config.service';
+import { ConfigGuard } from './guardianes/config.guard';
 
 @NgModule({
   declarations: [
@@ -53,7 +58,12 @@ import { AuthService } from './services/auth.service';
     ToastrModule.forRoot(),
     FlashMessagesModule.forRoot(),
   ],
-  providers: [ClienteService, AuthService],
+  providers: [ClienteService,
+    AuthService,
+    AuthGuard,
+    ConfigService,
+    ConfigGuard,
+    {provide: AUTH_SETTINGS, useValue:{ appVerificationDisabledForTesting: true }}],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

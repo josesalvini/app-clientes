@@ -28,12 +28,6 @@ export class AuthService {
     googleLogin() {
         const provider = new firebase.default.auth.GoogleAuthProvider();
         return this.oAuthLogin(provider).then(value => {
-            //console.log('Sucess: ', value);
-            console.log('USER: ', value.user);
-            //value.user?.getIdTokenResult().then(result => {
-            //    console.log('Token: ', result.token);
-            //    this.token = result.token;
-            //})
             this.router.navigateByUrl('/');
           })
            .catch(error => {

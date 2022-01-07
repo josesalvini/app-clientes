@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { FlashMessagesService } from 'flash-messages-angular';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-registro',
@@ -7,9 +10,19 @@ import { Component, OnInit } from '@angular/core';
 })
 export class RegistroComponent implements OnInit {
 
-  constructor() { }
+  email: string;
+  password: string;
+
+  constructor(private router:Router,
+    private flashMessages: FlashMessagesService,
+    private loginService: AuthService) { }
 
   ngOnInit(): void {
+  }
+
+
+  registrar(){
+
   }
 
 }
