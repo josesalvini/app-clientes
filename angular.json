@@ -20,7 +20,10 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "allowedCommonJsDependencies": ["lodash","flash-messages-angular"],
+            "allowedCommonJsDependencies": [
+              "lodash",
+              "flash-messages-angular"
+            ],
             "outputPath": "dist/app-clientes",
             "index": "src/index.html",
             "main": "src/main.ts",
@@ -112,6 +115,16 @@
               "node_modules/@popperjs/core/dist/umd/popper.min.js",
               "node_modules/bootstrap/dist/js/bootstrap.min.js"
             ]
+          }
+        },
+        "deploy": {
+          "builder": "@angular/fire:deploy",
+          "options": {
+            "prerender": false,
+            "ssr": false,
+            "browserTarget": "app-clientes:build:production",
+            "firebaseProject": "clientesapp-77523",
+            "firebaseHostingSite": "clientesapp-77523"
           }
         }
       }

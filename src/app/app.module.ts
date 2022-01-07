@@ -33,6 +33,9 @@ import { AuthService } from './services/auth.service';
 import { AuthGuard } from './guardianes/auth.guard';
 import { ConfigService } from './services/config.service';
 import { ConfigGuard } from './guardianes/config.guard';
+import { initializeApp,provideFirebaseApp } from '@angular/fire/app';
+import { provideAuth,getAuth } from '@angular/fire/auth';
+import { provideFirestore,getFirestore } from '@angular/fire/firestore';
 
 @NgModule({
   declarations: [
@@ -57,6 +60,9 @@ import { ConfigGuard } from './guardianes/config.guard';
     BrowserAnimationsModule,
     ToastrModule.forRoot(),
     FlashMessagesModule.forRoot(),
+    provideFirebaseApp(() => initializeApp(environment.firebase)),
+    provideAuth(() => getAuth()),
+    provideFirestore(() => getFirestore()),
   ],
   providers: [ClienteService,
     AuthService,

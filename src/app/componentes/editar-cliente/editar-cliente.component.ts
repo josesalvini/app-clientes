@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FlashMessagesService } from 'flash-messages-angular';
-import { ToastrService } from 'ngx-toastr';
 import { Cliente } from 'src/app/modelo/cliente.model';
 import { ClienteService } from 'src/app/services/cliente.service';
 
@@ -21,7 +20,6 @@ export class EditarClienteComponent implements OnInit {
   id: string;
 
   constructor(private clienteServicio: ClienteService,
-    private toastr: ToastrService,
     private flashMessages: FlashMessagesService,
     private router: Router,
     private route: ActivatedRoute) { }
@@ -30,7 +28,7 @@ export class EditarClienteComponent implements OnInit {
     this.id = this.route.snapshot.params['id'];
     this.clienteServicio
         .getCliente(this.id)
-        .subscribe(cliente => {
+        .subscribe((cliente: Cliente) => {
             this.cliente = cliente;
         });
   }

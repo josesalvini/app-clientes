@@ -1,5 +1,14 @@
 {
   "projects": {
     "default": "clientesapp-77523"
+  },
+  "targets": {
+    "clientesapp-77523": {
+      "hosting": {
+        "app-clientes": [
+          "clientesapp-77523"
+        ]
+      }
+    }
   }
 }
